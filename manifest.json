@@ -1,0 +1,17 @@
+{
+  "name": "Rahma — Guida Islamica Digital",
+  "short_name": "Rahma",
+  "description": "Corano, preghiere, tasbih, AI Halal e guida per nuovi musulmani.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0d0a1e",
+  "theme_color": "#0d0a1e",
+  "icons": [
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

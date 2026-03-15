@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Rahma — La tua guida islamica digitale. Corano, preghiere, tasbih, AI Halal, ascolto recitazioni e guida per nuovi musulmani.">
+  <meta name="theme-color" content="#0d0a1e">
+  <title>Rahma · App Islamica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+  <!-- Aurora background -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+  </div>
+
+  <!-- App wrapper -->
+  <div class="app-wrapper">
+
+    <!-- Top header -->
+    <header class="app-header" id="appHeader">
+      <div class="header-left">
+        <div class="app-logo">
+          <span class="logo-crescent">☽</span>
+          <span class="logo-name">Rahma</span>
+        </div>
+      </div>
+      <div class="header-center" id="headerTitle">Corano</div>
+      <div class="header-right">
+        <div class="hijri-pill" id="hijriPill">...</div>
+      </div>
+    </header>
+
+    <!-- Pages -->
+    <main class="pages-container" id="pagesContainer">
+
+      <!-- ═══════════════ QURAN ═══════════════ -->
+      <div class="page active" id="page-quran">
+
+        <div class="page-hero quran-hero">
+          <div class="hero-badge">📖 Corano</div>
+          <h1 class="hero-title">Il Sacro Corano</h1>
+          <p class="hero-sub">114 sure · Arabo con traduzione italiana</p>
+          <div class="search-bar">
+            <svg class="search-ico" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            <input type="search" id="surahSearch" placeholder="Cerca sura..." class="search-field" aria-label="Cerca sura">
+          </div>
+        </div>
+
+        <!-- Surah list -->
+        <div id="surahListWrap">
+          <div class="surah-list" id="surahList"></div>
+        </div>
+
+        <!-- Surah detail view -->
+        <div class="surah-detail hidden" id="surahDetail">
+          <div class="detail-topbar">
+            <button class="back-fab" id="backBtn" aria-label="Indietro">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="detail-title-wrap">
+              <div class="detail-title-it" id="detailTitleIt"></div>
+              <div class="detail-title-ar" id="detailTitleAr"></div>
+            </div>
+            <div class="detail-meta" id="detailMeta"></div>
+          </div>
+          <div class="bismillah-hero" id="bismillahHero">
+            <div class="bismillah-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="bismillah-it">Nel nome di Allah, il Compassionevole, il Misericordioso</div>
+          </div>
+          <div class="verse-feed" id="verseFeed"></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ ASCOLTA ═══════════════ -->
+      <div class="page" id="page-listen">
+        <div class="page-hero listen-hero">
+          <div class="hero-badge">🎧 Ascolto</div>
+          <h1 class="hero-title">Ascolta il Corano</h1>
+          <p class="hero-sub">Recitazioni dei più celebri lettori del mondo</p>
+        </div>
+
+        <!-- Reciter selector -->
+        <div class="reciter-section">
+          <div class="section-label">Scegli il lettore</div>
+          <div class="reciter-grid" id="reciterGrid"></div>
+        </div>
+
+        <!-- Player card -->
+        <div class="player-card glass-card" id="playerCard">
+          <div class="player-info">
+            <div class="player-surah-ar" id="playerSurahAr">—</div>
+            <div class="player-surah-it" id="playerSurahIt">Seleziona una sura</div>
+            <div class="player-reciter-name" id="playerReciterName"></div>
+          </div>
+          <div class="player-controls">
+            <button class="ctrl-btn" id="prevSurahBtn" aria-label="Sura precedente">⏮</button>
+            <button class="ctrl-btn play-btn" id="playBtn" aria-label="Riproduci/Pausa">▶</button>
+            <button class="ctrl-btn" id="nextSurahBtn" aria-label="Sura successiva">⏭</button>
+          </div>
+          <div class="player-progress-wrap">
+            <span class="player-time" id="playerTimeEl">0:00</span>
+            <input type="range" class="player-slider" id="playerSlider" min="0" max="100" value="0" aria-label="Posizione audio">
+            <span class="player-time" id="playerDurEl">0:00</span>
+          </div>
+        </div>
+
+        <!-- Surah list for audio -->
+        <div class="section-label" style="padding: 4px 16px 8px">Seleziona sura</div>
+        <div class="audio-surah-list" id="audioSurahList"></div>
+        <audio id="audioPlayer" preload="none"></audio>
+      </div>
+
+      <!-- ═══════════════ PRAYERS ═══════════════ -->
+      <div class="page" id="page-prayers">
+        <div class="page-hero prayers-hero">
+          <div class="hero-badge">🕌 Preghiere</div>
+          <h1 class="hero-title">Le 5 Preghiere Quotidiane</h1>
+          <p class="hero-sub" id="prayerDate"></p>
+        </div>
+
+        <!-- Progress ring card -->
+        <div class="glass-card ring-card">
+          <div class="ring-wrap">
+            <svg class="ring-svg" viewBox="0 0 160 160">
+              <circle class="ring-bg" cx="80" cy="80" r="66"/>
+              <circle class="ring-fg" id="prayerRing" cx="80" cy="80" r="66"
+                stroke-dasharray="414.69" stroke-dashoffset="414.69"/>
+            </svg>
+            <div class="ring-inner">
+              <span class="ring-number" id="ringNumber">0</span>
+              <span class="ring-label">/ 5</span>
+              <span class="ring-sub">oggi</span>
+            </div>
+          </div>
+          <div class="ring-card-right">
+            <div class="ring-message" id="ringMessage">Inizia la tua giornata con bismillah 🌅</div>
+            <button class="btn-ghost-sm" id="resetDayBtn">Azzera giornata</button>
+          </div>
+        </div>
+
+        <!-- Prayer cards -->
+        <div class="prayers-stack" id="prayersStack"></div>
+
+        <!-- Weekly view -->
+        <div class="glass-card">
+          <div class="card-label">Ultimi 7 giorni</div>
+          <div class="week-strip" id="weekStrip"></div>
+        </div>
+
+        <!-- Monthly stats -->
+        <div class="stats-row" id="statsRow"></div>
+      </div>
+
+      <!-- ═══════════════ TASBIH ═══════════════ -->
+      <div class="page tasbih-page" id="page-tasbih">
+        <div class="tasbih-bg" aria-hidden="true" id="tasbihBg"></div>
+
+        <!-- Dhikr selector -->
+        <div class="dhikr-selector" id="dhikrSelector"></div>
+
+        <!-- Main counter -->
+        <div class="tasbih-center">
+          <div class="dhikr-display">
+            <div class="dhikr-ar" id="tasbihAr"></div>
+            <div class="dhikr-translit" id="tasbihTranslit"></div>
+            <div class="dhikr-meaning" id="tasbihMeaning"></div>
+          </div>
+
+          <button class="tasbih-btn" id="tasbihBtn" aria-label="Incrementa">
+            <div class="tasbih-btn-inner">
+              <span class="tasbih-count" id="tasbihCount">0</span>
+              <span class="tasbih-hint">tocca</span>
+            </div>
+            <svg class="tasbih-ring-svg" viewBox="0 0 260 260">
+              <circle class="trk" cx="130" cy="130" r="115"/>
+              <circle class="tfg" id="tasbihFg" cx="130" cy="130" r="115"
+                stroke-dasharray="722.57" stroke-dashoffset="722.57"/>
+            </svg>
+          </button>
+
+          <div class="tasbih-target-label" id="tasbihTargetLabel">Obiettivo: 33</div>
+        </div>
+
+        <div class="tasbih-footer">
+          <div class="tasbih-session">Sessione: <strong id="tasbihSession">0</strong></div>
+          <div class="tasbih-actions">
+            <button class="tbtn" id="tasbihUndo">↺ Annulla</button>
+            <button class="tbtn" id="tasbihReset">Reset</button>
+            <button class="tbtn red" id="tasbihClear">Azzera tutto</button>
+          </div>
+        </div>
+
+        <!-- Completion flash -->
+        <div class="cycle-flash hidden" id="cycleFlash">
+          <div class="flash-content">
+            <div class="flash-emoji">✨</div>
+            <div class="flash-text">Ciclo completato!</div>
+            <div class="flash-count" id="flashCount"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ AI HALAL ═══════════════ -->
+      <div class="page ai-page" id="page-ai">
+        <div class="page-hero ai-hero">
+          <div class="hero-badge">🤖 Assistente</div>
+          <h1 class="hero-title">AI Halal</h1>
+          <p class="hero-sub">Domande su halal, haram e vita islamica</p>
+        </div>
+
+        <div class="ai-key-row" id="aiKeyRow">
+          <input type="password" id="aiKeyInput" class="ai-key-input" placeholder="Gemini API Key (per risposte AI reali, opzionale)">
+          <button class="ai-key-btn" id="aiKeySave">✓</button>
+        </div>
+
+        <div class="chat-feed" id="chatFeed">
+          <div class="chat-msg bot">
+            <div class="msg-avatar bot-av">R</div>
+            <div class="msg-bubble">
+              <p><strong>Assalamu Alaikum! 🌙</strong></p>
+              <p>Sono Rahma, la tua assistente AI islamica. Puoi chiedermi di:</p>
+              <div class="topic-chips">
+                <span class="chip">🥩 Cibo Halal & Haram</span>
+                <span class="chip">💰 Finanza islamica</span>
+                <span class="chip">🕌 Pratiche quotidiane</span>
+                <span class="chip">💊 Farmaci & cosmetici</span>
+              </div>
+              <p class="msg-disclaimer">Le risposte sono orientative. Per questioni importanti consulta sempre uno studioso qualificato.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-bottom">
+          <div class="quick-qs" id="quickQs">
+            <button class="qq-btn" onclick="quickAsk(this)">La gelatina è halal?</button>
+            <button class="qq-btn" onclick="quickAsk(this)">La carne kosher è permessa?</button>
+            <button class="qq-btn" onclick="quickAsk(this)">Cosa significa E471?</button>
+            <button class="qq-btn" onclick="quickAsk(this)">Il mutuo bancario è haram?</button>
+          </div>
+          <div class="chat-composer">
+            <textarea id="chatInput" class="composer-input" placeholder="Scrivi la tua domanda..." rows="1" aria-label="Messaggio"></textarea>
+            <button class="composer-send" id="chatSend" aria-label="Invia">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ NEW MUSLIMS ═══════════════ -->
+      <div class="page" id="page-new">
+        <div class="page-hero new-hero">
+          <div class="hero-badge">🌙 Guida</div>
+          <h1 class="hero-title">Nuovi Musulmani</h1>
+          <p class="hero-sub">Il tuo percorso nei pilastri dell'Islam</p>
+        </div>
+
+        <!-- Journey steps -->
+        <div class="journey-nav" id="journeyNav"></div>
+        <div class="journey-content" id="journeyContent"></div>
+
+        <!-- Glossary -->
+        <div class="glossary-section">
+          <div class="section-heading">📚 Glossario Islamico</div>
+          <div class="glossary-chips" id="glossaryChips"></div>
+        </div>
+
+        <!-- Privacy Policy Button -->
+        <div class="privacy-section" style="padding: 24px 16px; text-align: center; margin-top: 10px;">
+          <button id="openPrivacyBtn" class="btn-ghost-sm" style="color: var(--text3); text-decoration: underline; border: none; background: transparent; cursor: pointer; padding: 10px;">Informativa sulla Privacy</button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav" role="navigation" aria-label="Navigazione principale">
+      <button class="nav-btn active" data-page="quran" id="nb-quran" aria-label="Corano">
+        <div class="nav-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-lbl">Corano</span>
+      </button>
+      <button class="nav-btn" data-page="listen" id="nb-listen" aria-label="Ascolta">
+        <div class="nav-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-lbl">Ascolta</span>
+      </button>
+      <button class="nav-btn" data-page="prayers" id="nb-prayers" aria-label="Preghiere">
+        <div class="nav-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-lbl">Preghiere</span>
+      </button>
+      <button class="nav-btn tasbih-nav" data-page="tasbih" id="nb-tasbih" aria-label="Tasbih">
+        <div class="nav-icon-wrap tasbih-center-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2" stroke-linecap="round"/></svg>
+        </div>
+        <span class="nav-lbl">Tasbih</span>
+      </button>
+      <button class="nav-btn" data-page="ai" id="nb-ai" aria-label="AI Halal">
+        <div class="nav-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1 .03 2.698-1.379 2.302l-1.97-.554M5 14.5l-1.402 1.402c-1 1-.03 2.698 1.379 2.302l1.97-.554" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-lbl">AI Halal</span>
+      </button>
+      <button class="nav-btn" data-page="new" id="nb-new" aria-label="Guida">
+        <div class="nav-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-lbl">Guida</span>
+      </button>
+    </nav>
+
+  </div><!-- /app-wrapper -->
+
+  <!-- Privacy Policy Modal -->
+  <div class="modal-overlay hidden" id="privacyModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2 id="privacyTitle" style="font-size: 18px; font-weight: 700; color: var(--text);">Informativa sulla Privacy</h2>
+        <button id="closePrivacyBtn" style="background:none; border:none; color:var(--text2); font-size:24px; cursor:pointer;" aria-label="Chiudi">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 13px; color: var(--text2); line-height: 1.6; padding: 20px; max-height: 60vh; overflow-y: auto;">
+        <p>L’applicazione non raccoglie né memorizza dati personali degli utenti.</p>
+        <p>Non vengono utilizzati cookie propri né cookie di tracciamento o profilazione.</p>
+        <p>Non esiste alcun sistema di backend o raccolta dati lato server: tutte le funzionalità operano direttamente nel browser dell’utente.</p>
+        <p>Alcune informazioni (come preferenze o contenuti generati) possono essere salvate localmente tramite localStorage; questi dati restano sul dispositivo dell’utente e non vengono inviati a server esterni.</p>
+        <p>L’app può utilizzare servizi di terze parti (es. API pubbliche, Google Fonts, servizi di IA) che potrebbero registrare automaticamente informazioni tecniche come l’indirizzo IP, secondo le loro politiche sulla privacy.</p>
+        <p>L’informativa può essere aggiornata in qualsiasi momento per riflettere modifiche al funzionamento dell’app.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="db.js?v=4"></script>
+  <script src="data/content.js?v=4"></script>
+  <script src="app.js?v=4"></script>
+</body>
+</html>
