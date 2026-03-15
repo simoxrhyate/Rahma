@@ -1,5 +1,4 @@
 /* ============================================================
-   /* ============================================================
 RAHMA APP — app.js  v3
 Router · Quran · Listen · Prayers · Tasbih · AI · Guide
 ============================================================ */
@@ -32,7 +31,6 @@ if (btn)  btn.classList.add(‘active’);
 document.getElementById(‘headerTitle’).textContent = PAGE_LABELS[id] || ‘’;
 activePage = id;
 
-// Lazy inits
 if (id === ‘quran’  && !quranReady)  initQuran();
 if (id === ‘listen’ && !listenReady) initListen();
 if (id === ‘prayers’) await renderPrayers();
@@ -162,7 +160,6 @@ document.getElementById(‘surahDetail’).classList.add(‘hidden’);
 document.getElementById(‘surahListWrap’).classList.remove(‘hidden’);
 }
 
-// SVG gradient for prayer ring
 document.body.insertAdjacentHTML(‘afterbegin’, ` <svg class="svg-defs" aria-hidden="true"> <defs> <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%"> <stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#a78bfa"/> </linearGradient> </defs> </svg>`);
 
 /* ─────────────────────────────────────────────────────
@@ -174,10 +171,10 @@ let currentAudioSurah = null;
 let isPlaying = false;
 
 const RECITERS = [
-{ name: ‘Mishary Al-Afasy’,   style: ‘Murattal’,  emoji: ‘🎙’, id: ‘ar.alafasy’ },
-{ name: ‘Abdul Basit’,        style: ‘Murattal’,  emoji: ‘🎤’, id: ‘ar.abdulbasitmurattal’ },
-{ name: ‘Maher Al-Muaiqly’,   style: ‘Murattal’,  emoji: ‘🎵’, id: ‘ar.maharalmuaiqly’ },
-{ name: ‘Saad Al-Ghamdi’,    style: ‘Murattal’,  emoji: ‘🎶’, id: ‘ar.saadalghamdi’ },
+{ name: ‘Mishary Al-Afasy’,  style: ‘Murattal’, emoji: ‘🎙’, id: ‘ar.alafasy’ },
+{ name: ‘Abdul Basit’,       style: ‘Murattal’, emoji: ‘🎤’, id: ‘ar.abdulbasitmurattal’ },
+{ name: ‘Maher Al-Muaiqly’,  style: ‘Murattal’, emoji: ‘🎵’, id: ‘ar.maharalmuaiqly’ },
+{ name: ‘Saad Al-Ghamdi’,    style: ‘Murattal’, emoji: ‘🎶’, id: ‘ar.saadalghamdi’ },
 ];
 
 function initListen() {
@@ -205,9 +202,7 @@ currentReciterIdx = idx;
 document.querySelectorAll(’.reciter-card’).forEach((c, i) =>
 c.classList.toggle(‘active’, i === idx));
 document.getElementById(‘playerReciterName’).textContent = RECITERS[idx].name;
-if (currentAudioSurah !== null) {
-loadAudio(currentAudioSurah, false);
-}
+if (currentAudioSurah !== null) loadAudio(currentAudioSurah, false);
 }
 
 function buildAudioSurahList() {
@@ -221,19 +216,16 @@ row.className = ‘audio-surah-row’;
 row.id = `asr-${n}`;
 row.innerHTML = `<div class="as-num">${n}</div> <div class="as-info"> <div class="as-it">${it}</div> <div class="as-ar">${ar}</div> </div> <div class="as-play-icon">▶</div>`;
 row.addEventListener(‘click’, () => {
-if (currentAudioSurah === n && isPlaying) {
-togglePlayPause();
-} else {
-loadAudio(n, true);
-}
+if (currentAudioSurah === n && isPlaying) togglePlayPause();
+else loadAudio(n, true);
 });
 list.appendChild(row);
 });
 }
 
 function initPlayer() {
-const audio  = document.getElementById(‘audioPlayer’);
-const slider = document.getElementById(‘playerSlider’);
+const audio   = document.getElementById(‘audioPlayer’);
+const slider  = document.getElementById(‘playerSlider’);
 const playBtn = document.getElementById(‘playBtn’);
 
 document.getElementById(‘playBtn’).addEventListener(‘click’, togglePlayPause);
@@ -277,9 +269,7 @@ playBtn.classList.remove(‘playing’);
 });
 
 slider.addEventListener(‘input’, () => {
-if (audio.duration) {
-audio.currentTime = (slider.value / 100) * audio.duration;
-}
+if (audio.duration) audio.currentTime = (slider.value / 100) * audio.duration;
 });
 }
 
@@ -309,14 +299,11 @@ audio.src = url;
 audio.load();
 
 audio.onerror = () => {
-console.error(“Audio error for:”, url);
 document.getElementById(‘playerSurahIt’).textContent = “⚠️ Errore caricamento”;
 document.getElementById(‘playerReciterName’).textContent = “Prova un altro lettore”;
 };
 
-if (autoplay) audio.play().catch(() => {
-console.warn(“Autoplay blocked or failed”);
-});
+if (autoplay) audio.play().catch(() => {});
 }
 
 function togglePlayPause() {
@@ -341,7 +328,7 @@ const PRAYERS_DEF = [
 { id: ‘dhuhr’,   ar: ‘الظهر’,  it: ‘Dhuhr’,   time: ‘Mezzogiorno’, emoji: ‘☀️’ },
 { id: ‘asr’,     ar: ‘العصر’,  it: ‘Asr’,     time: ‘Pomeriggio’,  emoji: ‘🌤’ },
 { id: ‘maghrib’, ar: ‘المغرب’, it: ‘Maghrib’,  time: ‘Tramonto’,    emoji: ‘🌆’ },
-{ id: ‘isha’,    ar: ‘العشاء’, it: ‘Isha’,    time: ‘Notte’,        emoji: ‘🌙’ },
+{ id: ‘isha’,    ar: ‘العشاء’, it: ‘Isha’,     time: ‘Notte’,       emoji: ‘🌙’ },
 ];
 
 const RING_MSGS = [
@@ -361,7 +348,6 @@ return `rahma_p_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
 async function renderPrayers() {
 const data = await window.RahmaDB.getPrayers(todayKey());
 const done = PRAYERS_DEF.filter(p => data[p.id]).length;
-
 const cachedTimes = await window.RahmaDB.getCache(`times_${todayKey()}`);
 
 document.getElementById(‘prayerDate’).textContent = new Date().toLocaleDateString(‘it-IT’, {
@@ -395,9 +381,18 @@ card.innerHTML = `
   </div>
   <div class="p-check">${isDone ? '✓' : ''}</div>
 `;
-card.addEventListener('click', async () => { data[p.id] = !data[p.id]; await window.RahmaDB.savePrayers(todayKey(), data); await renderPrayers(); });
+card.addEventListener('click', async () => {
+  data[p.id] = !data[p.id];
+  await window.RahmaDB.savePrayers(todayKey(), data);
+  await renderPrayers();
+});
 card.addEventListener('keydown', async e => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); data[p.id] = !data[p.id]; await window.RahmaDB.savePrayers(todayKey(), data); await renderPrayers(); }
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    data[p.id] = !data[p.id];
+    await window.RahmaDB.savePrayers(todayKey(), data);
+    await renderPrayers();
+  }
 });
 stack.appendChild(card);
 ```
@@ -408,9 +403,11 @@ await renderWeek();
 await renderStats();
 }
 
-document.getElementById(‘resetDayBtn’).addEventListener(‘click’, async () => { await window.RahmaDB.savePrayers(todayKey(), {}); await renderPrayers(); });
+document.getElementById(‘resetDayBtn’).addEventListener(‘click’, async () => {
+await window.RahmaDB.savePrayers(todayKey(), {});
+await renderPrayers();
+});
 
-// ── LOCATION & DYNAMIC TIMES ──
 const locBtn = document.getElementById(‘getLocationBtn’);
 locBtn.addEventListener(‘click’, () => {
 locBtn.innerHTML = ‘<span class="loader-spinner"></span>’;
@@ -424,26 +421,16 @@ const res = await fetch(`https://api.aladhan.com/v1/timings/${t}?latitude=${lat}
 const json = await res.json();
 if (json.code === 200) {
 const tnx = json.data.timings;
-const mapped = {
-fajr: tnx.Fajr,
-dhuhr: tnx.Dhuhr,
-asr: tnx.Asr,
-maghrib: tnx.Maghrib,
-isha: tnx.Isha
-};
+const mapped = { fajr: tnx.Fajr, dhuhr: tnx.Dhuhr, asr: tnx.Asr, maghrib: tnx.Maghrib, isha: tnx.Isha };
 await window.RahmaDB.saveCache(`times_${todayKey()}`, mapped);
 locBtn.innerHTML = ‘📍 Aggiornato’;
 setTimeout(() => locBtn.innerHTML = ‘📍 Orari Locali’, 3000);
 await renderPrayers();
 }
 } catch (e) {
-console.error(“API error”, e);
 locBtn.innerHTML = ‘⚠️ Errore Rete’;
 }
-}, error => {
-console.warn(“Geolocation error”, error);
-locBtn.innerHTML = ‘⚠️ Posizione Negata’;
-});
+}, () => { locBtn.innerHTML = ‘⚠️ Posizione Negata’; });
 } else {
 locBtn.innerHTML = ‘⚠️ Non supportato’;
 }
@@ -517,22 +504,15 @@ const chip = e.target.closest(’.dk-chip’);
 if (!chip) return;
 const idx = parseInt(chip.dataset.i, 10);
 if (idx === dkIdx) return;
-
-```
 await window.RahmaDB.saveTasbihData(dkIdx, dkCount, dkSession, dkHistory);
-
 dkIdx = idx;
-
 const saved = await window.RahmaDB.getTasbihData(dkIdx);
 dkCount = saved.count;
 dkSession = saved.session;
 dkHistory = saved.history;
-
-document.querySelectorAll('.dk-chip').forEach(c => c.classList.remove('active'));
-chip.classList.add('active');
+document.querySelectorAll(’.dk-chip’).forEach(c => c.classList.remove(‘active’));
+chip.classList.add(‘active’);
 updateTasbihDisplay();
-```
-
 });
 
 document.getElementById(‘tasbihBtn’).addEventListener(‘click’, incrementDk);
@@ -581,7 +561,7 @@ await window.RahmaDB.saveTasbihData(dkIdx, dkCount, dkSession, dkHistory);
 }
 }
 
-async function resetDk()  { dkHistory = []; dkCount = 0; updateTasbihDisplay(); await window.RahmaDB.saveTasbihData(dkIdx, dkCount, dkSession, dkHistory); }
+async function resetDk() { dkHistory = []; dkCount = 0; updateTasbihDisplay(); await window.RahmaDB.saveTasbihData(dkIdx, dkCount, dkSession, dkHistory); }
 async function clearDk()  { dkHistory = []; dkCount = 0; dkSession = 0; updateTasbihDisplay(); await window.RahmaDB.saveTasbihData(dkIdx, dkCount, dkSession, dkHistory); }
 
 function showFlash() {
@@ -633,12 +613,11 @@ feed.scrollTop = feed.scrollHeight;
 return div;
 }
 
-/* ─── FIX: unica definizione di formatAnswer (per AI) ─── */
 function formatAnswer(text) {
 return text
 .replace(/**(.*?)**/g, ‘<strong>$1</strong>’)
 .replace(/\n\n/g, ‘</p><p>’)
-.replace(/\n•/g, ‘<br>•’)
+.replace(/\n\u2022/g, ‘<br>•’)
 .replace(/\n/g, ‘<br>’);
 }
 
@@ -706,9 +685,7 @@ NEW MUSLIMS — JOURNEY
 let journeyReady = false;
 
 function initJourney() {
-// Verifica che JOURNEY e GLOSSARY siano definiti
 if (typeof JOURNEY === ‘undefined’ || typeof GLOSSARY === ‘undefined’) {
-console.error(‘JOURNEY o GLOSSARY non definiti — verifica che content.js sia caricato correttamente’);
 const nav = document.getElementById(‘journeyNav’);
 if (nav) nav.innerHTML = ‘<div style="padding:20px;color:var(--text3);font-size:13px;">⚠️ Errore caricamento contenuti. Ricarica la pagina.</div>’;
 return;
@@ -717,8 +694,6 @@ return;
 journeyReady = true;
 const nav     = document.getElementById(‘journeyNav’);
 const content = document.getElementById(‘journeyContent’);
-
-// Pulisce eventuali contenuti precedenti
 nav.innerHTML = ‘’;
 content.innerHTML = ‘’;
 
@@ -761,8 +736,8 @@ gc.appendChild(chip);
 /* ─────────────────────────────────────────────────────
 PRIVACY MODAL
 ───────────────────────────────────────────────────── */
-const privacyModal = document.getElementById(‘privacyModal’);
-const openPrivacyBtn = document.getElementById(‘openPrivacyBtn’);
+const privacyModal    = document.getElementById(‘privacyModal’);
+const openPrivacyBtn  = document.getElementById(‘openPrivacyBtn’);
 const closePrivacyBtn = document.getElementById(‘closePrivacyBtn’);
 
 if (openPrivacyBtn && closePrivacyBtn && privacyModal) {
@@ -770,16 +745,12 @@ openPrivacyBtn.addEventListener(‘click’, () => {
 privacyModal.classList.remove(‘hidden’);
 privacyModal.setAttribute(‘aria-hidden’, ‘false’);
 });
-
 const closeModal = () => {
 privacyModal.classList.add(‘hidden’);
 privacyModal.setAttribute(‘aria-hidden’, ‘true’);
 };
-
 closePrivacyBtn.addEventListener(‘click’, closeModal);
-privacyModal.addEventListener(‘click’, e => {
-if (e.target === privacyModal) closeModal();
-});
+privacyModal.addEventListener(‘click’, e => { if (e.target === privacyModal) closeModal(); });
 }
 
 /* ─────────────────────────────────────────────────────
