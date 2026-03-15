@@ -495,8 +495,11 @@ async function renderWeek() {
 }
 
 function formatAnswer(text) {
-  // dummy function replacing the old stats
-  // We keep it empty and remove the old renderStats to replace it correctly.
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n•/g, '<br>•')
+    .replace(/\n/g, '<br>');
 }
 async function renderStats() {
   const now = new Date();
