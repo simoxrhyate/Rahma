@@ -495,9 +495,6 @@ async function renderWeek() {
 }
 
 function formatAnswer(text) {
-  // dummy function replacing the old stats
-  // We keep it empty and remove the old renderStats to replace it correctly.
-}
 async function renderStats() {
   const now = new Date();
   const today = now.getDate();
