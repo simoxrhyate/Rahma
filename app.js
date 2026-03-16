@@ -734,9 +734,8 @@ chatInput.addEventListener('input', () => {
 });
 
 /* ─────────────────────────────────────────────────────
-   // ------------------------------
-// SEZIONE: NUOVI MUSULMANI / JOURNEY
-// ------------------------------
+   SEZIONE: NUOVI MUSULMANI / JOURNEY
+───────────────────────────────────────────────────── */
 
 const JOURNEY = [
   {
@@ -786,9 +785,9 @@ const JOURNEY = [
       <h2>La Comunità (Ummah)</h2>
       <p>La comunità è una parte fondamentale dell’Islam. Cerca di frequentare la moschea più vicina e conoscere altri musulmani.</p>
       <p>Essere circondati da persone che condividono il tuo percorso rende tutto più semplice e più bello.</p>
-  }`
+    `
   },
-  }
+  {
     emoji: "🌙",
     label: "Il Digiuno (Sawm)",
     html: `
@@ -799,10 +798,6 @@ const JOURNEY = [
   }
 ];
 
-// ------------------------------
-// GLOSSARIO ISLAMICO BASE
-// ------------------------------
-
 const GLOSSARY = [
   { t: "Allah", d: "Dio, il Creatore dell'universo secondo l'Islam." },
   { t: "Islam", d: "Sottomissione a Dio e stile di vita basato sul Corano e sulla Sunnah." },
@@ -812,6 +807,7 @@ const GLOSSARY = [
   { t: "Ummah", d: "La comunità globale dei musulmani." },
   { t: "Halal", d: "Ciò che è permesso nell'Islam." },
   { t: "Haram", d: "Ciò che è proibito nell'Islam." }
+];
 ───────────────────────────────────────────────────── */
 let journeyReady = false;
 
