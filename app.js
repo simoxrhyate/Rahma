@@ -738,7 +738,7 @@ chatInput.addEventListener('input', () => {
 // SEZIONE: NUOVI MUSULMANI / JOURNEY
 // ------------------------------
 
-const JOURNEY = [true]
+const JOURNEY = [
   {
     emoji: "🕌",
     label: "La Shahada",
@@ -786,9 +786,9 @@ const JOURNEY = [true]
       <h2>La Comunità (Ummah)</h2>
       <p>La comunità è una parte fondamentale dell’Islam. Cerca di frequentare la moschea più vicina e conoscere altri musulmani.</p>
       <p>Essere circondati da persone che condividono il tuo percorso rende tutto più semplice e più bello.</p>
-    `
+  }`
   },
-  {
+  }
     emoji: "🌙",
     label: "Il Digiuno (Sawm)",
     html: `
