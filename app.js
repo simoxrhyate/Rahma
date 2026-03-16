@@ -734,7 +734,84 @@ chatInput.addEventListener('input', () => {
 });
 
 /* ─────────────────────────────────────────────────────
-   NEW MUSLIMS — JOURNEY
+   // ------------------------------
+// SEZIONE: NUOVI MUSULMANI / JOURNEY
+// ------------------------------
+
+const JOURNEY = [
+  {
+    emoji: "🕌",
+    label: "La Shahada",
+    html: `
+      <h2>La Shahada</h2>
+      <p>La Shahada è la testimonianza di fede che rende una persona musulmana:</p>
+      <p><strong>"Non c’è divinità all’infuori di Allah e Muhammad è il Suo Messaggero."</strong></p>
+      <p>È la base dell’Islam e ciò che distingue il credente. Da qui inizia il percorso di ogni nuovo musulmano.</p>
+    `
+  },
+  {
+    emoji: "📿",
+    label: "La Preghiera (Salah)",
+    html: `
+      <h2>La Preghiera (Salah)</h2>
+      <p>La preghiera è il secondo pilastro dell’Islam e si compie cinque volte al giorno. Non serve imparare tutto subito: inizia gradualmente.</p>
+      <ul>
+        <li>Fajr – Preghiera dell’alba</li>
+        <li>Dhuhr – Preghiera del mezzogiorno</li>
+        <li>Asr – Preghiera del pomeriggio</li>
+        <li>Maghrib – Preghiera del tramonto</li>
+        <li>Isha – Preghiera della notte</li>
+      </ul>
+      <p>Allah guarda l’intenzione e lo sforzo, non la perfezione immediata.</p>
+    `
+  },
+  {
+    emoji: "📖",
+    label: "Il Corano",
+    html: `
+      <h2>Il Corano</h2>
+      <p>Il Corano è la guida per eccellenza dei musulmani. Come nuovo credente puoi iniziare leggendo anche solo pochi versetti al giorno.</p>
+      <p>Consigli:</p>
+      <ul>
+        <li>Inizia dalla Sura Al-Fatiha e poi da Al-Baqara</li>
+        <li>Leggi una traduzione nella tua lingua per comprendere meglio</li>
+        <li>Non serve conoscere l’arabo per iniziare</li>
+      </ul>
+    `
+  },
+  {
+    emoji: "🤝",
+    label: "La Comunità (Ummah)",
+    html: `
+      <h2>La Comunità (Ummah)</h2>
+      <p>La comunità è una parte fondamentale dell’Islam. Cerca di frequentare la moschea più vicina e conoscere altri musulmani.</p>
+      <p>Essere circondati da persone che condividono il tuo percorso rende tutto più semplice e più bello.</p>
+    `
+  },
+  {
+    emoji: "🌙",
+    label: "Il Digiuno (Sawm)",
+    html: `
+      <h2>Il Digiuno (Sawm)</h2>
+      <p>Il digiuno del Ramadan è uno dei pilastri dell’Islam. Come nuovo musulmano non devi preoccuparti se non sai come funziona: è un percorso graduale.</p>
+      <p>Il digiuno consiste nell’astenersi dal cibo, dal bere e dalle cattive azioni dall’alba al tramonto.</p>
+    `
+  }
+];
+
+// ------------------------------
+// GLOSSARIO ISLAMICO BASE
+// ------------------------------
+
+const GLOSSARY = [
+  { t: "Allah", d: "Dio, il Creatore dell'universo secondo l'Islam." },
+  { t: "Islam", d: "Sottomissione a Dio e stile di vita basato sul Corano e sulla Sunnah." },
+  { t: "Iman", d: "La fede nel cuore del credente." },
+  { t: "Salah", d: "La preghiera obbligatoria cinque volte al giorno." },
+  { t: "Sunnah", d: "Gli insegnamenti e gli esempi del Profeta Muhammad." },
+  { t: "Ummah", d: "La comunità globale dei musulmani." },
+  { t: "Halal", d: "Ciò che è permesso nell'Islam." },
+  { t: "Haram", d: "Ciò che è proibito nell'Islam." }
 ───────────────────────────────────────────────────── */
 let journeyReady = false;
 
