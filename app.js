@@ -738,7 +738,7 @@ chatInput.addEventListener('input', () => {
 // SEZIONE: NUOVI MUSULMANI / JOURNEY
 // ------------------------------
 
-const JOURNEY = [
+const JOURNEY = [true]
   {
     emoji: "🕌",
     label: "La Shahada",
